@@ -1,6 +1,7 @@
 package com.alura.condominio;
 
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/agendaTelefonica")
 public class AgendaTelefonicaController {
+
+    @Autowired
+    private ContatoRepository contatoRepository;
 
     @GetMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
@@ -24,14 +30,29 @@ public class AgendaTelefonicaController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<String> cadastrar(@Valid @RequestBody ContratoEntrada contratoEntrada) {
-        return ResponseEntity.ok(contratoEntrada.getNome());
+    public ResponseEntity<ContatoEntity> cadastrar(@Valid @RequestBody ContratoEntrada contratoEntrada) {
+        ContatoEntity contato = new ContatoEntity();
+
+        contato.setNome(contratoEntrada.getNome());
+        contato.setCpf(contratoEntrada.getCpf());
+        contato.setId(UUID.randomUUID().toString());
+
+        contatoRepository.save(contato);
+
+        return ResponseEntity.ok(contato);
     }
 
     @PutMapping("/atualizar/{identificador}")
-    public String atualizar(@Valid @RequestBody ContratoEntrada contratoEntrada,
+    public ContatoEntity atualizar(@Valid @RequestBody ContratoEntrada contratoEntrada,
                             @PathVariable("identificador") String id) {
-        return id;
+        ContatoEntity contato = contatoRepository.findById(id).get();
+
+        contato.setNome(contratoEntrada.getNome());
+        contato.setCpf(contratoEntrada.getCpf());
+
+        contatoRepository.save(contato);
+
+        return contato;
     }
 
     @GetMapping("/buscar")
