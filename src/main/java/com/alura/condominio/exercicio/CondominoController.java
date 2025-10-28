@@ -30,7 +30,7 @@ public class CondominoController {
         return "Cadastro atualizado com sucesso";
     }
 
-    @GetMapping
+    @GetMapping("/filtros")
     @ResponseStatus(HttpStatus.OK)
     public String buscarCondominoPorCPF(@RequestParam("cpf") String cpf){
         return "Lista de condominos";
