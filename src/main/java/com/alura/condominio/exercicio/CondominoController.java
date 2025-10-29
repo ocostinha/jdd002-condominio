@@ -1,5 +1,6 @@
 package com.alura.condominio.exercicio;
 
+import com.alura.condominio.RecursoNaoEncontratoException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,7 +48,8 @@ public class CondominoController {
     @ResponseStatus(HttpStatus.OK)
     public CondominoEntity atualizarCondomino(@PathVariable String id,
                                      @Valid @RequestBody ContratoEntradaCadastroCondomino condomino){
-        CondominoEntity condominoEntity = condominoRepository.findById(id).get();
+        CondominoEntity condominoEntity = condominoRepository.findById(id)
+            .orElseThrow(() -> new RecursoNaoEncontratoException("Contato não encontrado"));
 
         condominoEntity.setApartamento(condomino.getApartamento());
         condominoEntity.setBloco(condomino.getBloco());
@@ -65,7 +67,8 @@ public class CondominoController {
     @GetMapping("/filtros")
     @ResponseStatus(HttpStatus.OK)
     public CondominoEntity buscarCondominoPorCPF(@RequestParam("cpf") String cpf){
-        return condominoRepository.findByCpf(cpf).get();
+        return condominoRepository.findByCpf(cpf)
+            .orElseThrow(() -> new RecursoNaoEncontratoException("Contato não encontrado"));
     }
 
     @GetMapping

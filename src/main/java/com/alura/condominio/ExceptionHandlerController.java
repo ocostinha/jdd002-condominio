@@ -29,4 +29,10 @@ public class ExceptionHandlerController {
         return errors;
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(RecursoNaoEncontratoException.class)
+    public String handle(RecursoNaoEncontratoException exception) {
+        return exception.getMessage();
+    }
+
 }

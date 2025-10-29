@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -45,7 +46,8 @@ public class AgendaTelefonicaController {
     @PutMapping("/atualizar/{identificador}")
     public ContatoEntity atualizar(@Valid @RequestBody ContratoEntrada contratoEntrada,
                             @PathVariable("identificador") String id) {
-        ContatoEntity contato = contatoRepository.findById(id).get();
+        ContatoEntity contato = contatoRepository.findById(id)
+            .orElseThrow(() -> new RecursoNaoEncontratoException("Contato não encontrado"));
 
         contato.setNome(contratoEntrada.getNome());
         contato.setCpf(contratoEntrada.getCpf());
