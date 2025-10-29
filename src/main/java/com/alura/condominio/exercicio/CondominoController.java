@@ -1,6 +1,7 @@
 package com.alura.condominio.exercicio;
 
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,39 +14,70 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/condomino")
 public class CondominoController {
 
+    @Autowired
+    private CondominoRepository condominoRepository;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String cadastrarCondomino(@Valid @RequestBody ContratoEntradaCadastroCondomino condomino){
-        return "Cadastro efetuado com sucesso";
+    public CondominoEntity cadastrarCondomino(@Valid @RequestBody ContratoEntradaCadastroCondomino condomino){
+        CondominoEntity condominoEntity = new CondominoEntity();
+
+        condominoEntity.setApartamento(condomino.getApartamento());
+        condominoEntity.setBloco(condomino.getBloco());
+        condominoEntity.setCpf(condomino.getCpf());
+        condominoEntity.setEmail(condomino.getEmail());
+        condominoEntity.setNome(condomino.getNome());
+        condominoEntity.setNumeroCelular(condomino.getNumeroCelular());
+        condominoEntity.setDddCelular(condomino.getDddCelular());
+        condominoEntity.setId(UUID.randomUUID().toString());
+
+        condominoRepository.save(condominoEntity);
+
+        return condominoEntity;
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public String atualizarCondomino(@PathVariable String id,
+    public CondominoEntity atualizarCondomino(@PathVariable String id,
                                      @Valid @RequestBody ContratoEntradaCadastroCondomino condomino){
-        return "Cadastro atualizado com sucesso";
+        CondominoEntity condominoEntity = condominoRepository.findById(id).get();
+
+        condominoEntity.setApartamento(condomino.getApartamento());
+        condominoEntity.setBloco(condomino.getBloco());
+        condominoEntity.setCpf(condomino.getCpf());
+        condominoEntity.setEmail(condomino.getEmail());
+        condominoEntity.setNome(condomino.getNome());
+        condominoEntity.setNumeroCelular(condomino.getNumeroCelular());
+        condominoEntity.setDddCelular(condomino.getDddCelular());
+
+        condominoRepository.save(condominoEntity);
+
+        return condominoEntity;
     }
 
     @GetMapping("/filtros")
     @ResponseStatus(HttpStatus.OK)
-    public String buscarCondominoPorCPF(@RequestParam("cpf") String cpf){
-        return "Lista de condominos";
+    public CondominoEntity buscarCondominoPorCPF(@RequestParam("cpf") String cpf){
+        return condominoRepository.findByCpf(cpf).get();
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public String buscarTodosCondomino(){
-        return "Lista de todos os condominos";
+    public List<CondominoEntity> buscarTodosCondomino(){
+        return condominoRepository.findAll();
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public String deletarCondomino(@PathVariable String id){
-        return "Condomino deletado com sucesso";
+    public void deletarCondomino(@PathVariable String id){
+        condominoRepository.deleteById(id);
     }
 
 }
