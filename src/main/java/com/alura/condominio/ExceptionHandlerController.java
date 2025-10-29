@@ -35,4 +35,10 @@ public class ExceptionHandlerController {
         return exception.getMessage();
     }
 
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(RegraDeNegocioException.class)
+    public String handle(RegraDeNegocioException exception) {
+        return exception.getMessage();
+    }
+
 }

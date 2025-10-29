@@ -32,6 +32,12 @@ public class AgendaTelefonicaController {
 
     @PostMapping("/cadastrar")
     public ResponseEntity<ContatoEntity> cadastrar(@Valid @RequestBody ContratoEntrada contratoEntrada) {
+        Optional<ContatoEntity> contatoExistente = contatoRepository.findByCpf(contratoEntrada.getCpf());
+
+        if (contatoExistente.isPresent()) {
+            throw new RegraDeNegocioException("Contato já cadastrado");
+        }
+
         ContatoEntity contato = new ContatoEntity();
 
         contato.setNome(contratoEntrada.getNome());
