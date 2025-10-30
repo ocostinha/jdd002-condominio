@@ -8,6 +8,8 @@ import com.alura.condominio.infra.RecursoNaoEncontradoException;
 import com.alura.condominio.infra.RegraDeNegocioException;
 import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,9 +29,9 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/condomino")
+@AllArgsConstructor
 public class CondominoController {
 
-    @Autowired
     private CondominoRepository condominoRepository;
 
     @PostMapping

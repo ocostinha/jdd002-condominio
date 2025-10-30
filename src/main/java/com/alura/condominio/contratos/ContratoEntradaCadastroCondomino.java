@@ -4,7 +4,15 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ContratoEntradaCadastroCondomino {
 
     @NotNull
@@ -30,65 +38,5 @@ public class ContratoEntradaCadastroCondomino {
     @NotBlank
     @NotEmpty
     private String apartamento;
-
-    public ContratoEntradaCadastroCondomino() {
-    }
-
-    public ContratoEntradaCadastroCondomino(final String nomeCompleto, final String cpf, final String email, final String telefone, final String bloco, final String apartamento) {
-        this.nomeCompleto = nomeCompleto;
-        this.cpf = cpf;
-        this.email = email;
-        this.telefone = telefone;
-        this.bloco = bloco;
-        this.apartamento = apartamento;
-    }
-
-    public String getNomeCompleto() {
-        return nomeCompleto;
-    }
-
-    public void setNomeCompleto(final String nomeCompleto) {
-        this.nomeCompleto = nomeCompleto;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(final String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(final String email) {
-        this.email = email;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(final String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getBloco() {
-        return bloco;
-    }
-
-    public void setBloco(final String bloco) {
-        this.bloco = bloco;
-    }
-
-    public String getApartamento() {
-        return apartamento;
-    }
-
-    public void setApartamento(final String apartamento) {
-        this.apartamento = apartamento;
-    }
 
 }
