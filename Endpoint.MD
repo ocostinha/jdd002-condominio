@@ -68,7 +68,7 @@ PUT
 #### Resorce:
 /condomino/filtros
 
-### Parametros:
+#### Parametros:
 * nome
 * cpf
 * bloco

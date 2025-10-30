@@ -3,6 +3,7 @@ package com.alura.condominio.infra;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,6 +43,14 @@ public class ExceptionHandlerGlobal {
     public Map<String, String> handleException(RecursoNaoEncontradoException exception) {
         Map<String, String> errors = new HashMap<>();
         errors.put("mensagem", exception.getMessage());
+        return errors;
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleException(MissingServletRequestParameterException exception) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("mensagem", exception.getLocalizedMessage());
         return errors;
     }
 
