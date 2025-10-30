@@ -5,11 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = "com.alura.condominio")
+@EnableJpaRepositories(basePackages = "com.alura.condominio.database")
 public class CondominioApplication {
 
 	public static void main(String[] args) {
-		System.out.println("Olá");
 		SpringApplication.run(CondominioApplication.class, args);
 	}
 

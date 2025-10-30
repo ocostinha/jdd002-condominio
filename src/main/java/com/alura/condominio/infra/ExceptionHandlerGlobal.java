@@ -1,4 +1,4 @@
-package com.alura.condominio;
+package com.alura.condominio.infra;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -13,11 +13,11 @@ import java.util.Map;
 
 @ControllerAdvice
 @ResponseBody
-public class ExceptionHandlerController {
+public class ExceptionHandlerGlobal {
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handle(MethodArgumentNotValidException exception) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> handleException(MethodArgumentNotValidException exception) {
         Map<String, String> errors = new HashMap<>();
 
         exception.getBindingResult().getAllErrors().forEach((error) -> {
@@ -29,16 +29,12 @@ public class ExceptionHandlerController {
         return errors;
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(RecursoNaoEncontratoException.class)
-    public String handle(RecursoNaoEncontratoException exception) {
-        return exception.getMessage();
-    }
-
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(RegraDeNegocioException.class)
-    public String handle(RegraDeNegocioException exception) {
-        return exception.getMessage();
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public Map<String, String> handleException(RegraDeNegocioException exception) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("mensagem", exception.getMessage());
+        return errors;
     }
 
 }
