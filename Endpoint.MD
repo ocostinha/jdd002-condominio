@@ -52,6 +52,7 @@ PUT
 #### Response Status Code:
 * 200 - OK
 * 400 - BadRequest
+* 404 - Not Found
 
 #### Contrato de Saída:
 * ID
