@@ -44,15 +44,7 @@ public class CondominoController {
             throw new RegraDeNegocioException("CPF já cadastrado");
         }
 
-        CondominoEntity condominoEntity = new CondominoEntity();
-
-        condominoEntity.setId(UUID.randomUUID().toString());
-        condominoEntity.setNomeCompleto(condomino.getNomeCompleto());
-        condominoEntity.setCpf(condomino.getCpf());
-        condominoEntity.setEmail(condomino.getEmail());
-        condominoEntity.setTelefone(condomino.getTelefone());
-        condominoEntity.setBloco(condomino.getBloco());
-        condominoEntity.setApartamento(condomino.getApartamento());
+        CondominoEntity condominoEntity = new CondominoEntity().fromContratoEntrada(condomino);
 
         condominoRepository.save(condominoEntity);
 
@@ -69,15 +61,11 @@ public class CondominoController {
             throw new RecursoNaoEncontradoException("Condomino não encontrado");
         }
 
-        condominoExistente.get().setNomeCompleto(condomino.getNomeCompleto());
-        condominoExistente.get().setEmail(condomino.getEmail());
-        condominoExistente.get().setTelefone(condomino.getTelefone());
-        condominoExistente.get().setBloco(condomino.getBloco());
-        condominoExistente.get().setApartamento(condomino.getApartamento());
+        CondominoEntity condominoAtualizado = new CondominoEntity().atualizarCondomino(condominoExistente.get(), condomino);
 
-        condominoRepository.save(condominoExistente.get());
+        condominoRepository.save(condominoAtualizado);
 
-        return condominoExistente.get();
+        return condominoAtualizado;
     }
 
     @GetMapping("/filtros")
