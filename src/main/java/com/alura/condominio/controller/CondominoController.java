@@ -31,6 +31,7 @@ import java.util.Optional;
 public class CondominoController {
 
     private CondominoRepository condominoRepository;
+    private CondominoAdapter condominoAdapter;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -42,7 +43,7 @@ public class CondominoController {
             throw new RegraDeNegocioException("CPF já cadastrado");
         }
 
-        CondominoEntity condominoEntity = CondominoAdapter.toEntity(condomino);
+        CondominoEntity condominoEntity = condominoAdapter.toEntity(condomino);
 
         condominoRepository.save(condominoEntity);
 
@@ -59,7 +60,7 @@ public class CondominoController {
             throw new RecursoNaoEncontradoException("Condomino não encontrado");
         }
 
-        CondominoEntity condominoAtualizado = CondominoAdapter.update(condominoExistente.get(), condomino);
+        CondominoEntity condominoAtualizado = condominoAdapter.update(condominoExistente.get(), condomino);
 
         condominoRepository.save(condominoAtualizado);
 

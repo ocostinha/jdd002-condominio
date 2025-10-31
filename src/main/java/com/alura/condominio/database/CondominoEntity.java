@@ -20,7 +20,6 @@ public class CondominoEntity {
     private String cpf;
     private String email;
     private String telefone;
-    private String telefoneContato;
     private String bloco;
     private String apartamento;
 

@@ -3,34 +3,18 @@ package com.alura.condominio.adapter;
 import com.alura.condominio.contratos.ContratoEntradaAtualizacaoCondomino;
 import com.alura.condominio.contratos.ContratoEntradaCadastroCondomino;
 import com.alura.condominio.database.CondominoEntity;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
-import java.util.UUID;
+@Mapper(componentModel = "spring", imports = {java.util.UUID.class})
+public interface CondominoAdapter {
 
-public class CondominoAdapter {
+    @Mapping(target = "id", expression = "java(UUID.randomUUID().toString())")
+    CondominoEntity toEntity(ContratoEntradaCadastroCondomino contratoEntrada);
 
-    public static CondominoEntity toEntity(ContratoEntradaCadastroCondomino contratoEntrada) {
-        CondominoEntity condominoEntity = new CondominoEntity();
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "cpf", ignore = true)
+    CondominoEntity update(@MappingTarget CondominoEntity condominoEntity, ContratoEntradaAtualizacaoCondomino contratoEntrada);
 
-        condominoEntity.setId(UUID.randomUUID().toString());
-        condominoEntity.setNomeCompleto(contratoEntrada.getNomeCompleto());
-        condominoEntity.setCpf(contratoEntrada.getCpf());
-        condominoEntity.setEmail(contratoEntrada.getEmail());
-        condominoEntity.setTelefone(contratoEntrada.getTelefone());
-        condominoEntity.setTelefoneContato(contratoEntrada.getTelefoneContato());
-        condominoEntity.setBloco(contratoEntrada.getBloco());
-        condominoEntity.setApartamento(contratoEntrada.getApartamento());
-
-        return condominoEntity;
-    }
-
-    public static CondominoEntity update(CondominoEntity condominoEntity, ContratoEntradaAtualizacaoCondomino contratoEntrada) {
-        condominoEntity.setNomeCompleto(contratoEntrada.getNomeCompleto());
-        condominoEntity.setEmail(contratoEntrada.getEmail());
-        condominoEntity.setTelefone(contratoEntrada.getTelefone());
-        condominoEntity.setTelefoneContato(contratoEntrada.getTelefoneContato());
-        condominoEntity.setBloco(contratoEntrada.getBloco());
-        condominoEntity.setApartamento(contratoEntrada.getApartamento());
-
-        return condominoEntity;
-    }
 }
