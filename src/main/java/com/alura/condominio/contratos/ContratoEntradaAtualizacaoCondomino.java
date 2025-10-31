@@ -23,6 +23,7 @@ public class ContratoEntradaAtualizacaoCondomino {
 
     private String email;
     private String telefone;
+    private String telefoneContato;
 
     @NotNull
     @NotBlank

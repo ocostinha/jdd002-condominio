@@ -1,5 +1,6 @@
 package com.alura.condominio.controller;
 
+import com.alura.condominio.adapter.CondominoAdapter;
 import com.alura.condominio.contratos.ContratoEntradaAtualizacaoCondomino;
 import com.alura.condominio.contratos.ContratoEntradaCadastroCondomino;
 import com.alura.condominio.database.CondominoEntity;
@@ -9,8 +10,6 @@ import com.alura.condominio.infra.RegraDeNegocioException;
 import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/condomino")
@@ -44,7 +42,7 @@ public class CondominoController {
             throw new RegraDeNegocioException("CPF já cadastrado");
         }
 
-        CondominoEntity condominoEntity = new CondominoEntity().fromContratoEntrada(condomino);
+        CondominoEntity condominoEntity = CondominoAdapter.toEntity(condomino);
 
         condominoRepository.save(condominoEntity);
 
@@ -61,7 +59,7 @@ public class CondominoController {
             throw new RecursoNaoEncontradoException("Condomino não encontrado");
         }
 
-        CondominoEntity condominoAtualizado = new CondominoEntity().atualizarCondomino(condominoExistente.get(), condomino);
+        CondominoEntity condominoAtualizado = CondominoAdapter.update(condominoExistente.get(), condomino);
 
         condominoRepository.save(condominoAtualizado);
 

@@ -28,6 +28,7 @@ public class ContratoEntradaCadastroCondomino {
 
     private String email;
     private String telefone;
+    private String telefoneContato;
 
     @NotNull
     @NotBlank
