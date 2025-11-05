@@ -8,6 +8,10 @@ import com.alura.condominio.clearArch.service.repository.entity.CondominoEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class CondominoServiceImpl implements CondominoService {
@@ -27,6 +31,31 @@ public class CondominoServiceImpl implements CondominoService {
         CondominoEntity condominoCadastrado = condominoRepository.save(novoCondominoConvertido);
 
         return condominoAdapter.toDomain(condominoCadastrado);
+    }
+
+    @Override
+    public boolean existeCondomino(final String id) {
+        return condominoRepository.findById(id).isPresent();
+    }
+
+    @Override
+    public void deletar(final String id) {
+        condominoRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Condomino> consultarTodos() {
+        List<CondominoEntity> condominos = condominoRepository.findAll();
+
+//        List<Condomino> condominosConvertidos = new ArrayList<>();
+//
+//        condominos.forEach(condomino -> {
+//            condominosConvertidos.add(condominoAdapter.toDomain(condomino));
+//        });
+//
+//        return condominosConvertidos;
+
+        return condominos.stream().map(condominoAdapter::toDomain).toList();
     }
 
 }
