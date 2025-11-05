@@ -1,5 +1,7 @@
-package com.alura.condominio.infra;
+package com.alura.condominio.clearArch.core.rest;
 
+import com.alura.condominio.clearArch.core.exceptions.RecursoNaoEncontradoException;
+import com.alura.condominio.clearArch.core.exceptions.RegraDeNegocioException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;

@@ -1,4 +1,4 @@
-package com.alura.condominio.contratos;
+package com.alura.condominio.clearArch.entrypoint.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContratoEntradaAtualizacaoCondomino {
+public class ContratoEntradaAtualizacaoCondominoDTO {
 
     @NotNull
     @NotEmpty

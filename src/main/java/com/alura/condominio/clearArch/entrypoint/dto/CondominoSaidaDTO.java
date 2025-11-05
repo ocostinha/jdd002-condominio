@@ -1,20 +1,16 @@
-package com.alura.condominio.database;
+package com.alura.condominio.clearArch.entrypoint.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class CondominoEntity {
+public class CondominoSaidaDTO {
 
-    @Id
     private String id;
     private String nomeCompleto;
     private String cpf;

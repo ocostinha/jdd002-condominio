@@ -1,5 +1,6 @@
-package com.alura.condominio.database;
+package com.alura.condominio.clearArch.service.repository;
 
+import com.alura.condominio.clearArch.service.repository.entity.CondominoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

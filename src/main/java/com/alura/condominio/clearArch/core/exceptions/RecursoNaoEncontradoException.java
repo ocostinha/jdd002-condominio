@@ -1,4 +1,4 @@
-package com.alura.condominio.infra;
+package com.alura.condominio.clearArch.core.exceptions;
 
 public class RecursoNaoEncontradoException extends RuntimeException{
 
