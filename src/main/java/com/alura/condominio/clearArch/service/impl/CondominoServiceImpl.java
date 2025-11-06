@@ -24,11 +24,11 @@ public class CondominoServiceImpl implements CondominoService {
 
     @Override
     public Condomino cadastrar(final Condomino novoCondomino) {
-        CondominoEntity novoCondominoConvertido = condominoAdapter.toEntity(novoCondomino);
-
-        CondominoEntity condominoCadastrado = condominoRepository.save(novoCondominoConvertido);
-
-        return condominoAdapter.toDomain(condominoCadastrado);
+        return condominoAdapter.toDomain(
+            condominoRepository.save(
+                condominoAdapter.toEntity(novoCondomino)
+            )
+        );
     }
 
     @Override
@@ -43,46 +43,26 @@ public class CondominoServiceImpl implements CondominoService {
 
     @Override
     public List<Condomino> consultarTodos() {
-        List<CondominoEntity> condominos = condominoRepository.findAll();
-
-//        List<Condomino> condominosConvertidos = new ArrayList<>();
-//
-//        condominos.forEach(condomino -> {
-//            condominosConvertidos.add(condominoAdapter.toDomain(condomino));
-//        });
-//
-//        return condominosConvertidos;
-
-        return condominos.stream().map(condominoAdapter::toDomain).toList();
+        return condominoRepository.findAll()
+            .stream()
+            .map(condominoAdapter::toDomain)
+            .toList();
     }
 
     @Override
     public Condomino atualizar(final Condomino condominoEsperandoAtualizacao) {
-//        CondominoEntity condominoExistente = condominoRepository.findById(condominoEsperandoAtualizacao.getId()).get();
-//
-//        condominoExistente.setApartamento(condominoEsperandoAtualizacao.getApartamento());
-//        condominoExistente.setBloco(condominoEsperandoAtualizacao.getBloco());
-//        condominoExistente.setEmail(condominoEsperandoAtualizacao.getEmail());
-//        condominoExistente.setNomeCompleto(condominoEsperandoAtualizacao.getNomeCompleto());
-//        condominoExistente.setTelefone(condominoEsperandoAtualizacao.getTelefone());
-//
-//        CondominoEntity condominoAtualizado = condominoRepository.save(condominoExistente);
-//
-//        return condominoAdapter.toDomain(condominoAtualizado);
-
         CondominoEntity condominoExistente = condominoRepository.findById(condominoEsperandoAtualizacao.getId()).get();
         CondominoEntity condominoAtualizado = condominoAdapter.update(condominoExistente, condominoEsperandoAtualizacao);
-        CondominoEntity condominoSalvo = condominoRepository.save(condominoAtualizado);
 
-        return condominoAdapter.toDomain(condominoSalvo);
+        return condominoAdapter.toDomain(
+            condominoRepository.save(
+                condominoAtualizado
+            )
+        );
     }
 
     @Override
     public List<Condomino> consultarPorFiltros(final String nome, final String cpf, final String bloco, final String apartamento) {
-//        List<CondominoEntity> condominos = condominoRepository.findByNomeCompletoContainingIgnoreCaseAndCpfContainingIgnoreCaseAndBlocoContainingIgnoreCaseAndApartamentoContainingIgnoreCase(nome, cpf, bloco, apartamento);
-//
-//        return condominos.stream().map(condominoAdapter::toDomain).toList();
-
         return condominoRepository.findByNomeCompletoContainingIgnoreCaseAndCpfContainingIgnoreCaseAndBlocoContainingIgnoreCaseAndApartamentoContainingIgnoreCase(nome, cpf, bloco, apartamento)
             .stream()
             .map(condominoAdapter::toDomain)

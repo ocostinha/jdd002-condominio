@@ -34,28 +34,22 @@ public class CondominoController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CondominoSaidaDTO cadastrarCondomino(@Valid @RequestBody ContratoEntradaCadastroCondominoDTO novoCondomino) {
-        Condomino condominoConvertido = condominoAdapter.toDomain(novoCondomino);
-
-        Condomino condominoSalvo = condominoBusiness.cadastrarCondomino(condominoConvertido);
-
-        return condominoAdapter.toSaidaDTO(condominoSalvo);
+        return condominoAdapter.toSaidaDTO(
+            condominoBusiness.cadastrarCondomino(
+                condominoAdapter.toDomain(novoCondomino)
+            )
+        );
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CondominoSaidaDTO atualizarCondomino(@Valid @RequestBody ContratoEntradaAtualizacaoCondominoDTO condomino,
                                                 @PathVariable String id) {
-//        Condomino condominoConvertido = condominoAdapter.toDomain(condomino);
-//        condominoConvertido.setId(id);
-//        condominoBusiness.atualizarCondomino(condominoConvertido);
-
-//        Condomino condominoConvertido = condominoAdapter.toDomain(condomino);
-//        condominoBusiness.atualizarCondomino(condominoConvertido, id);
-
-        Condomino condominoConvertido = condominoAdapter.toDomain(condomino, id);
-        Condomino condominoAtualizado = condominoBusiness.atualizarCondomino(condominoConvertido);
-
-        return condominoAdapter.toSaidaDTO(condominoAtualizado);
+        return condominoAdapter.toSaidaDTO(
+            condominoBusiness.atualizarCondomino(
+                condominoAdapter.toDomain(condomino, id)
+            )
+        );
     }
 
     @GetMapping("/filtros")
@@ -73,9 +67,10 @@ public class CondominoController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<CondominoSaidaDTO> consultarCondominos() {
-        List<Condomino> condominos = condominoBusiness.consultarTodosCondominos();
-
-        return condominos.stream().map(condominoAdapter::toSaidaDTO).toList();
+        return condominoBusiness.consultarTodosCondominos()
+            .stream()
+            .map(condominoAdapter::toSaidaDTO)
+            .toList();
     }
 
     @DeleteMapping("/{id}")

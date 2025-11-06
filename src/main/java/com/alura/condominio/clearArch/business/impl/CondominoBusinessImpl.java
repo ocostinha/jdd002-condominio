@@ -22,9 +22,7 @@ public class CondominoBusinessImpl implements CondominoBusiness {
             throw new RegraDeNegocioException("CPF já cadastrado");
         }
 
-        Condomino condominoSalvo = condominoService.cadastrar(novoCondomino);
-
-        return condominoSalvo;
+        return condominoService.cadastrar(novoCondomino);
     }
 
     @Override
@@ -47,9 +45,7 @@ public class CondominoBusinessImpl implements CondominoBusiness {
             throw new RecursoNaoEncontradoException("Condomino não encontrado");
         }
 
-        Condomino condominoAtualizado = condominoService.atualizar(condominoEsperandoAtualizacao);
-
-        return condominoAtualizado;
+        return condominoService.atualizar(condominoEsperandoAtualizacao);
     }
 
     @Override
