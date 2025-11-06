@@ -2,6 +2,7 @@ package com.alura.condominio.clearArch.entrypoint.adapter;
 
 import com.alura.condominio.clearArch.domain.Condomino;
 import com.alura.condominio.clearArch.entrypoint.dto.CondominoSaidaDTO;
+import com.alura.condominio.clearArch.entrypoint.dto.ContratoEntradaAtualizacaoCondominoDTO;
 import com.alura.condominio.clearArch.entrypoint.dto.ContratoEntradaCadastroCondominoDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -11,6 +12,13 @@ public interface CondominoEntrypointAdapter {
 
     @Mapping(target = "id", expression = "java(java.util.UUID.randomUUID().toString())")
     Condomino toDomain(ContratoEntradaCadastroCondominoDTO contratoEntrada);
+
+    @Mapping(target = "cpf", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    Condomino toDomain(ContratoEntradaAtualizacaoCondominoDTO contratoEntrada);
+
+    @Mapping(target = "cpf", ignore = true)
+    Condomino toDomain(ContratoEntradaAtualizacaoCondominoDTO contratoEntrada, String id);
 
     CondominoSaidaDTO toSaidaDTO(Condomino condomino);
 

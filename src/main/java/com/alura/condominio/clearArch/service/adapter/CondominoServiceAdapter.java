@@ -3,6 +3,8 @@ package com.alura.condominio.clearArch.service.adapter;
 import com.alura.condominio.clearArch.domain.Condomino;
 import com.alura.condominio.clearArch.service.repository.entity.CondominoEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface CondominoServiceAdapter {
@@ -10,5 +12,9 @@ public interface CondominoServiceAdapter {
     CondominoEntity toEntity(Condomino domain);
 
     Condomino toDomain(CondominoEntity entity);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "cpf", ignore = true)
+    CondominoEntity update(@MappingTarget CondominoEntity condominoExistente, Condomino condominoEsperandoAtualizacao);
 
 }

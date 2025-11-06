@@ -12,4 +12,6 @@ public interface CondominoBusiness {
 
     List<Condomino> consultarTodosCondominos();
 
+    Condomino atualizarCondomino(Condomino condominoConvertido);
+
 }

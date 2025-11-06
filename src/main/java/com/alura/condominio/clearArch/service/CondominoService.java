@@ -16,4 +16,6 @@ public interface CondominoService {
 
     List<Condomino> consultarTodos();
 
+    Condomino atualizar(Condomino condominoEsperandoAtualizacao);
+
 }

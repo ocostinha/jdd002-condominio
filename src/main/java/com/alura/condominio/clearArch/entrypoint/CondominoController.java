@@ -4,6 +4,7 @@ import com.alura.condominio.clearArch.business.CondominoBusiness;
 import com.alura.condominio.clearArch.domain.Condomino;
 import com.alura.condominio.clearArch.entrypoint.adapter.CondominoEntrypointAdapter;
 import com.alura.condominio.clearArch.entrypoint.dto.CondominoSaidaDTO;
+import com.alura.condominio.clearArch.entrypoint.dto.ContratoEntradaAtualizacaoCondominoDTO;
 import com.alura.condominio.clearArch.entrypoint.dto.ContratoEntradaCadastroCondominoDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -37,23 +39,24 @@ public class CondominoController {
         return condominoAdapter.toSaidaDTO(condominoSalvo);
     }
 
-//    @PutMapping("/{id}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public CondominoSaidaDTO atualizarCondomino(@Valid @RequestBody ContratoEntradaAtualizacaoCondominoDTO condomino,
-//                                              @PathVariable String id) {
-//        Optional<CondominoEntity> condominoExistente = condominoRepository.findById(id);
-//
-//        if (condominoExistente.isEmpty()) {
-//            throw new RecursoNaoEncontradoException("Condomino não encontrado");
-//        }
-//
-//        CondominoEntity condominoAtualizado = condominoAdapter.update(condominoExistente.get(), condomino);
-//
-//        condominoRepository.save(condominoAtualizado);
-//
-//        return condominoAtualizado;
-//    }
-//
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public CondominoSaidaDTO atualizarCondomino(@Valid @RequestBody ContratoEntradaAtualizacaoCondominoDTO condomino,
+                                                @PathVariable String id) {
+//        Condomino condominoConvertido = condominoAdapter.toDomain(condomino);
+//        condominoConvertido.setId(id);
+//        condominoBusiness.atualizarCondomino(condominoConvertido);
+
+//        Condomino condominoConvertido = condominoAdapter.toDomain(condomino);
+//        condominoBusiness.atualizarCondomino(condominoConvertido, id);
+
+        Condomino condominoConvertido = condominoAdapter.toDomain(condomino, id);
+        Condomino condominoAtualizado = condominoBusiness.atualizarCondomino(condominoConvertido);
+
+        return condominoAdapter.toSaidaDTO(condominoAtualizado);
+    }
+
+    //
 //    @GetMapping("/filtros")
 //    @ResponseStatus(HttpStatus.OK)
 //    public List<CondominoSaidaDTO> consultarCondominoComFiltros(@Nullable @RequestParam("nome") String nome,

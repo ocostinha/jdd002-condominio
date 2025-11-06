@@ -17,7 +17,7 @@ public class CondominoBusinessImpl implements CondominoBusiness {
     private CondominoService condominoService;
 
     @Override
-    public Condomino cadastrarCondomino(final Condomino novoCondomino) {
+    public Condomino cadastrarCondomino(Condomino novoCondomino) {
         if (condominoService.exiteCPF(novoCondomino.getCpf())) {
             throw new RegraDeNegocioException("CPF já cadastrado");
         }
@@ -28,7 +28,7 @@ public class CondominoBusinessImpl implements CondominoBusiness {
     }
 
     @Override
-    public void deletarCondomino(final String id) {
+    public void deletarCondomino(String id) {
         if (!condominoService.existeCondomino(id)) {
             throw new RecursoNaoEncontradoException("Condomino não encontrado");
         }
@@ -39,6 +39,17 @@ public class CondominoBusinessImpl implements CondominoBusiness {
     @Override
     public List<Condomino> consultarTodosCondominos() {
         return condominoService.consultarTodos();
+    }
+
+    @Override
+    public Condomino atualizarCondomino(Condomino condominoEsperandoAtualizacao) {
+        if (!condominoService.existeCondomino(condominoEsperandoAtualizacao.getId())) {
+            throw new RecursoNaoEncontradoException("Condomino não encontrado");
+        }
+
+        Condomino condominoAtualizado = condominoService.atualizar(condominoEsperandoAtualizacao);
+
+        return condominoAtualizado;
     }
 
 }

@@ -8,8 +8,6 @@ import com.alura.condominio.clearArch.service.repository.entity.CondominoEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -56,6 +54,27 @@ public class CondominoServiceImpl implements CondominoService {
 //        return condominosConvertidos;
 
         return condominos.stream().map(condominoAdapter::toDomain).toList();
+    }
+
+    @Override
+    public Condomino atualizar(final Condomino condominoEsperandoAtualizacao) {
+//        CondominoEntity condominoExistente = condominoRepository.findById(condominoEsperandoAtualizacao.getId()).get();
+//
+//        condominoExistente.setApartamento(condominoEsperandoAtualizacao.getApartamento());
+//        condominoExistente.setBloco(condominoEsperandoAtualizacao.getBloco());
+//        condominoExistente.setEmail(condominoEsperandoAtualizacao.getEmail());
+//        condominoExistente.setNomeCompleto(condominoEsperandoAtualizacao.getNomeCompleto());
+//        condominoExistente.setTelefone(condominoEsperandoAtualizacao.getTelefone());
+//
+//        CondominoEntity condominoAtualizado = condominoRepository.save(condominoExistente);
+//
+//        return condominoAdapter.toDomain(condominoAtualizado);
+
+        CondominoEntity condominoExistente = condominoRepository.findById(condominoEsperandoAtualizacao.getId()).get();
+        CondominoEntity condominoAtualizado = condominoAdapter.update(condominoExistente, condominoEsperandoAtualizacao);
+        CondominoEntity condominoSalvo = condominoRepository.save(condominoAtualizado);
+
+        return condominoAdapter.toDomain(condominoSalvo);
     }
 
 }
