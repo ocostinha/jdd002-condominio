@@ -18,4 +18,6 @@ public interface CondominoService {
 
     Condomino atualizar(Condomino condominoEsperandoAtualizacao);
 
+    List<Condomino> consultarPorFiltros(String nome, String cpf, String bloco, String apartamento);
+
 }

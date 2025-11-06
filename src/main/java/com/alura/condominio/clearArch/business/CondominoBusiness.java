@@ -2,6 +2,7 @@ package com.alura.condominio.clearArch.business;
 
 import com.alura.condominio.clearArch.domain.Condomino;
 
+import java.util.Arrays;
 import java.util.List;
 
 public interface CondominoBusiness {
@@ -13,5 +14,7 @@ public interface CondominoBusiness {
     List<Condomino> consultarTodosCondominos();
 
     Condomino atualizarCondomino(Condomino condominoConvertido);
+
+    List<Condomino> consultarCondominoComFiltros(String nome, String cpf, String bloco, String apartamento);
 
 }

@@ -6,6 +6,7 @@ import com.alura.condominio.clearArch.entrypoint.adapter.CondominoEntrypointAdap
 import com.alura.condominio.clearArch.entrypoint.dto.CondominoSaidaDTO;
 import com.alura.condominio.clearArch.entrypoint.dto.ContratoEntradaAtualizacaoCondominoDTO;
 import com.alura.condominio.clearArch.entrypoint.dto.ContratoEntradaCadastroCondominoDTO;
+import io.micrometer.common.lang.Nullable;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -56,39 +58,18 @@ public class CondominoController {
         return condominoAdapter.toSaidaDTO(condominoAtualizado);
     }
 
-    //
-//    @GetMapping("/filtros")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<CondominoSaidaDTO> consultarCondominoComFiltros(@Nullable @RequestParam("nome") String nome,
-//                                                              @Nullable @RequestParam("cpf") String cpf,
-//                                                              @Nullable @RequestParam("bloco") String bloco,
-//                                                              @Nullable @RequestParam("apartamento") String apartamento) {
-//        if ((nome == null || nome.isEmpty()) &&
-//            (cpf == null || cpf.isEmpty()) &&
-//            (bloco == null || bloco.isEmpty()) &&
-//            (apartamento == null || apartamento.isEmpty())) {
-//            throw new RegraDeNegocioException("Informe ao menos um dos filtros (nome, cpf, bloco, apartamento) para realizar a consulta");
-//        }
-//
-//        if (nome == null) {
-//            nome = "";
-//        }
-//
-//        if (cpf == null) {
-//            cpf = "";
-//        }
-//
-//        if (bloco == null) {
-//            bloco = "";
-//        }
-//
-//        if (apartamento == null) {
-//            apartamento = "";
-//        }
-//
-//        return condominoRepository.findByNomeCompletoContainingIgnoreCaseAndCpfContainingIgnoreCaseAndBlocoContainingIgnoreCaseAndApartamentoContainingIgnoreCase(nome, cpf, bloco, apartamento);
-//    }
-//
+    @GetMapping("/filtros")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CondominoSaidaDTO> consultarCondominoComFiltros(@Nullable @RequestParam("nome") String nome,
+                                                                @Nullable @RequestParam("cpf") String cpf,
+                                                                @Nullable @RequestParam("bloco") String bloco,
+                                                                @Nullable @RequestParam("apartamento") String apartamento) {
+        return condominoBusiness.consultarCondominoComFiltros(nome, cpf, bloco, apartamento)
+            .stream()
+            .map(condominoAdapter::toSaidaDTO)
+            .toList();
+    }
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<CondominoSaidaDTO> consultarCondominos() {

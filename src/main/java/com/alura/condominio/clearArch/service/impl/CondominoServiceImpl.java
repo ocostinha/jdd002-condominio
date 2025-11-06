@@ -77,4 +77,16 @@ public class CondominoServiceImpl implements CondominoService {
         return condominoAdapter.toDomain(condominoSalvo);
     }
 
+    @Override
+    public List<Condomino> consultarPorFiltros(final String nome, final String cpf, final String bloco, final String apartamento) {
+//        List<CondominoEntity> condominos = condominoRepository.findByNomeCompletoContainingIgnoreCaseAndCpfContainingIgnoreCaseAndBlocoContainingIgnoreCaseAndApartamentoContainingIgnoreCase(nome, cpf, bloco, apartamento);
+//
+//        return condominos.stream().map(condominoAdapter::toDomain).toList();
+
+        return condominoRepository.findByNomeCompletoContainingIgnoreCaseAndCpfContainingIgnoreCaseAndBlocoContainingIgnoreCaseAndApartamentoContainingIgnoreCase(nome, cpf, bloco, apartamento)
+            .stream()
+            .map(condominoAdapter::toDomain)
+            .toList();
+    }
+
 }

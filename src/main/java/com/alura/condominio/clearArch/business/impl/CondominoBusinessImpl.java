@@ -52,4 +52,32 @@ public class CondominoBusinessImpl implements CondominoBusiness {
         return condominoAtualizado;
     }
 
+    @Override
+    public List<Condomino> consultarCondominoComFiltros(String nome, String cpf, String bloco, String apartamento) {
+        if ((nome == null || nome.isEmpty()) &&
+            (cpf == null || cpf.isEmpty()) &&
+            (bloco == null || bloco.isEmpty()) &&
+            (apartamento == null || apartamento.isEmpty())) {
+            throw new RegraDeNegocioException("Informe ao menos um dos filtros (nome, cpf, bloco, apartamento) para realizar a consulta");
+        }
+
+        if (nome == null) {
+            nome = "";
+        }
+
+        if (cpf == null) {
+            cpf = "";
+        }
+
+        if (bloco == null) {
+            bloco = "";
+        }
+
+        if (apartamento == null) {
+            apartamento = "";
+        }
+
+        return condominoService.consultarPorFiltros(nome, cpf, bloco, apartamento);
+    }
+
 }
